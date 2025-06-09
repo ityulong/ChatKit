@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.2'
+    namespace 'com.stfalcon.chatkit.sample'
+    compileSdkVersion 34
     defaultConfig {
         applicationId "com.stfalcon.chatkit.sample"
         minSdkVersion 14
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -23,8 +24,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
@@ -32,23 +33,21 @@ dependencies {
     implementation project(':chatkit')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation 'junit:junit:4.13'
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.5.1')
+    testImplementation 'junit:junit:4.13.2'
 
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.google.android.material:material:1.10.0'
 
     //Picasso
-    implementation "com.squareup.picasso:picasso:2.71828"
+    implementation "com.squareup.picasso:picasso:2.8"
 
     //ImageViews
-    implementation "de.hdodenhof:circleimageview:2.2.0"
+    implementation "de.hdodenhof:circleimageview:3.1.0"
     implementation "com.github.siyamed:android-shape-imageview:0.9.3"
 
     //Utils
-    implementation "me.relex:circleindicator:1.2.2@aar"
+    implementation "me.relex:circleindicator:2.1.6@aar"
 
 }
