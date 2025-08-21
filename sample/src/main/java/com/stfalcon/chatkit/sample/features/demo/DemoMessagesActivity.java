@@ -6,9 +6,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.squareup.picasso.Picasso;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.messages.MessagesListAdapter;
@@ -21,6 +18,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /*
  * Created by troy379 on 04.04.17.
@@ -62,15 +62,18 @@ public abstract class DemoMessagesActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_delete:
-                messagesAdapter.deleteSelectedMessages();
-                break;
-            case R.id.action_copy:
-                messagesAdapter.copySelectedMessagesText(this, getMessageStringFormatter(), true);
-                AppUtils.showToast(this, R.string.copied_message, true);
-                break;
+        int itemId = item.getItemId(); // 先获取 item ID
+
+        if (itemId == R.id.action_delete) {
+            messagesAdapter.deleteSelectedMessages();
+        } else if (itemId == R.id.action_copy) {
+            messagesAdapter.copySelectedMessagesText(this, getMessageStringFormatter(), true);
+            AppUtils.showToast(this, R.string.copied_message, true);
         }
+
+        // 注意：原始代码中，无论哪个 case 匹配，最终都会返回 true。
+        // 如果你的意图是只在匹配到 case 时才返回 true，需要调整。
+        // 但按照原始逻辑，直接返回 true 是正确的。
         return true;
     }
 

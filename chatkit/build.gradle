@@ -12,15 +12,23 @@ android {
         versionName '0.4.1'
         consumerProguardFiles 'proguard.txt'
     }
-    android {
-        lintOptions {
-            abortOnError false
-        }
+
+    // 你有一个多余的 android { ... } 块，我已经将其合并了
+    lintOptions {
+        abortOnError false
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // 1. 在 android 块中添加 publishing 配置
+    publishing {
+        singleVariant("release") {
+            // （可选）如果你想同时发布源码，可以在这里添加
+            // withSourcesJar()
+        }
     }
 }
 
@@ -29,21 +37,27 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
-    implementation "com.google.android:flexbox:3.0.0"
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.3.2'
 }
 
+// 2. 修改顶层的 publishing 块来引用组件
 publishing {
     publications {
-        // Creates a Maven publication called "release".
+        // 创建一个名为 "release" 的 Maven publication
         release(MavenPublication) {
-            // Applies the component for the release build variant.
-            singleVariant("release")
+            // 通过 afterEvaluate 等待 android.publishing 配置完成后，
+            // 再引用 "release" 组件
+            afterEvaluate {
+                from components.release
+            }
 
-            // You can then customize attributes of the publication as shown below.
+            // 在这里自定义发布的属性
             groupId = 'com.github.stfalcon'
             artifactId = 'chatkit'
             version = '0.4.1'
         }
     }
+    // 如果需要，在这里添加仓库配置
+    // repositories { ... }
 }
